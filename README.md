@@ -1,4 +1,4 @@
-# Criando uma Maquina Virtual  no AWS
+# Criando uma Maquina Virtual na AWS com Terraform
 
 - Primeiramente tenha uma conta na AWS.
 - Crie um Usuário com o Privilégio (Administrator Access).
@@ -16,6 +16,7 @@ Este projeto cria os seguintes Recursos:
 - Subnet Privada
 - Máquina Virtual Ubuntu (EC2)
 - Chave SSH (KeyPairs)
+    Você tem que criar sua Chave antes (ssh-keygen) ou Utilizar uma existente.
 - Security Groups (Acesso Internet e SSH)
 
 - Mostra o IP Publico ao final
