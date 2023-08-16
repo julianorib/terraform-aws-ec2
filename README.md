@@ -42,6 +42,12 @@ SET AWS_SECRET_ACCESS_KEY="Sua-Senha"
 SET AWS_REGION="us-west-2"
 ```
 
+## Faça o clone para sua Estação
+
+```
+git clone https://github.com/julianorib/terraform-aws-ec2.git
+```
+
 ## Ajustes no Projeto
 
 Neste primeiro momento, não criei variáveis para os Recursos.
