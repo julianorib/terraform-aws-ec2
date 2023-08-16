@@ -53,7 +53,7 @@ git clone https://github.com/julianorib/terraform-aws-ec2.git
 Neste primeiro momento, não criei variáveis para os Recursos.
 Está tudo setado na mão. 
 Altere os nomes conforme necessário. " "
-
+**main.tf**
 
 ## Execute para Criação
 
