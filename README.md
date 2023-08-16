@@ -1,5 +1,7 @@
 # Criando uma Maquina Virtual na AWS com Terraform
 
+Estou iniciando meus estudos com Terraform e este é meu primeiro projeto. 
+
 - Primeiramente tenha uma conta na AWS.
 - Crie um Usuário com o Privilégio (Administrator Access).
 - Crie uma Chave de Acesso para este Usuario.
@@ -20,34 +22,6 @@ Este projeto cria os seguintes Recursos:
 - Security Groups (Acesso Internet e SSH)
 
 - Mostra o IP Publico ao final
-
-
-## Melhorias Futuras
-
-- Pretendo criar as variáveis de nomes dos Recursos
-- Pretendo organizar os Recursos em arquivos separados
-
-
-## Imagens de Instalação (aws_ami)
-
-Consultando Imagens Disponíveis por meio do AWS CLI:
-
-Amazon
-```
-aws ec2 describe-images --owners amazon --filters "Name=name,Values=amzn*gp2" "Name=virtualization-type,Values=hvm" "Name=root-device-type,Values=ebs" --query "sort_by(Images, &CreationDate)[*].[CreationDate, ImageId, Name]" --output text
-```
-Windows
-```
-aws ec2 describe-images --filters "Name=name,Values=Windows*" "Name=virtualization-type,Values=hvm" "Name=root-device-type,Values=ebs" --query "sort_by(Images, &CreationDate)[*].[CreationDate, ImageId, Name, OwnerId]" --output text
-```
-RedHat
-```
-aws ec2 describe-images --owners 309956199498 --filters "Name=name,Values=RHEL*x86_64*" "Name=virtualization-type,Values=hvm" "Name=root-device-type,Values=ebs" --query "sort_by(Images, &CreationDate)[*].[CreationDate, ImageId, Name]" --output text
-```
-Ubuntu
-```
-aws ec2 describe-images --owners 099720109477 --filters "Name=name,Values=ubuntu/images/hvm-ssd/*amd64*" "Name=virtualization-type,Values=hvm" "Name=root-device-type,Values=ebs" --query "sort_by(Images, &CreationDate)[*].[CreationDate, ImageId, Name]" --output text
-```
 
 ## Exportando variáveis de ambiente para conexão
 
@@ -90,3 +64,33 @@ terraform apply
 ```
 terraform destroy
 ```
+
+
+## Melhorias Futuras
+
+- Pretendo criar as variáveis de nomes dos Recursos
+- Pretendo organizar os Recursos em arquivos separados
+
+
+## Imagens de Instalação (aws_ami)
+
+Consultando Imagens Disponíveis por meio do AWS CLI:
+
+Amazon
+```
+aws ec2 describe-images --owners amazon --filters "Name=name,Values=amzn*gp2" "Name=virtualization-type,Values=hvm" "Name=root-device-type,Values=ebs" --query "sort_by(Images, &CreationDate)[*].[CreationDate, ImageId, Name]" --output text
+```
+Windows
+```
+aws ec2 describe-images --filters "Name=name,Values=Windows*" "Name=virtualization-type,Values=hvm" "Name=root-device-type,Values=ebs" --query "sort_by(Images, &CreationDate)[*].[CreationDate, ImageId, Name, OwnerId]" --output text
+```
+RedHat
+```
+aws ec2 describe-images --owners 309956199498 --filters "Name=name,Values=RHEL*x86_64*" "Name=virtualization-type,Values=hvm" "Name=root-device-type,Values=ebs" --query "sort_by(Images, &CreationDate)[*].[CreationDate, ImageId, Name]" --output text
+```
+Ubuntu
+```
+aws ec2 describe-images --owners 099720109477 --filters "Name=name,Values=ubuntu/images/hvm-ssd/*amd64*" "Name=virtualization-type,Values=hvm" "Name=root-device-type,Values=ebs" --query "sort_by(Images, &CreationDate)[*].[CreationDate, ImageId, Name]" --output text
+```
+
+
