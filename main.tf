@@ -35,8 +35,8 @@ resource "aws_internet_gateway" "my_gw" {
 resource "aws_subnet" "my_subnet_public" {
   vpc_id = aws_vpc.my_vpc.id
   # publica números impares
-  cidr_block        = "10.200.1.0/24"
-  availability_zone = "us-east-2a"
+  cidr_block              = "10.200.1.0/24"
+  availability_zone       = "us-east-2a"
   map_public_ip_on_launch = true
 
   tags = {
@@ -106,11 +106,11 @@ data "aws_ami" "ubuntu" {
 }
 
 resource "aws_instance" "myEC2" {
-  ami           = data.aws_ami.ubuntu.id
-  instance_type = "t2.micro"
-  key_name      = aws_key_pair.mykey.key_name
-  subnet_id     = aws_subnet.my_subnet_public.id
-  security_groups = [ aws_security_group.acesso-out-internet.id,aws_security_group.acesso-in-ssh.id ]
+  ami             = data.aws_ami.ubuntu.id
+  instance_type   = "t2.micro"
+  key_name        = aws_key_pair.mykey.key_name
+  subnet_id       = aws_subnet.my_subnet_public.id
+  security_groups = [aws_security_group.acesso-out-internet.id, aws_security_group.acesso-in-ssh.id]
 
   tags = {
     Name = "myEC2"
@@ -123,36 +123,36 @@ resource "aws_key_pair" "mykey" {
 }
 
 resource "aws_security_group" "acesso-out-internet" {
-  name = "acesso-out-internet"
+  name        = "acesso-out-internet"
   description = "permite acesso out internet"
-  vpc_id = aws_vpc.my_vpc.id
+  vpc_id      = aws_vpc.my_vpc.id
 
   egress {
-    description      = "all"
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
+    description = "all"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
 }
 
 resource "aws_security_group" "acesso-in-ssh" {
-  name = "acesso-in-ssh"
+  name        = "acesso-in-ssh"
   description = "permite acesso in ssh"
-  vpc_id = aws_vpc.my_vpc.id
+  vpc_id      = aws_vpc.my_vpc.id
 
   ingress {
-    description      = "SSH 22"
-    from_port        = 22
-    to_port          = 22
-    protocol         = "tcp"
-    cidr_blocks      = ["0.0.0.0/0"]
+    description = "SSH 22"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
 }
 
 output "public_ip" {
   value = aws_instance.myEC2.public_ip
-  
+
 }
