@@ -9,7 +9,7 @@ Estou iniciando meus estudos com Terraform e este é meu primeiro projeto.
 - Tenha ou Instale o AWS Cli no seu Computador.
 
 
-Este projeto cria os seguintes Recursos:
+## Detalhes do Projeto
 
 - VPC
 - Subnet Publica
