@@ -23,7 +23,20 @@ Este projeto cria os seguintes Recursos:
 
 - Mostra o IP Publico ao final
 
-## Exportando variáveis de ambiente para conexão
+## Faça o clone para sua Estação
+
+```
+git clone https://github.com/julianorib/terraform-aws-ec2.git
+```
+
+## Ajustes no Projeto
+
+Neste primeiro momento, não criei variáveis para os Recursos.
+Está tudo setado na mão. 
+Altere os nomes conforme necessário. " "
+**main.tf**
+
+## Autenticação
 
 Eu exporto as configurações de login e senha para criação dos Recursos.
 Desta forma, não deixo fixo no projeto.
@@ -42,18 +55,6 @@ SET AWS_SECRET_ACCESS_KEY="Sua-Senha"
 SET AWS_REGION="us-west-2"
 ```
 
-## Faça o clone para sua Estação
-
-```
-git clone https://github.com/julianorib/terraform-aws-ec2.git
-```
-
-## Ajustes no Projeto
-
-Neste primeiro momento, não criei variáveis para os Recursos.
-Está tudo setado na mão. 
-Altere os nomes conforme necessário. " "
-**main.tf**
 
 ## Execute para Criação
 
