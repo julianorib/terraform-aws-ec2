@@ -11,6 +11,8 @@ Estou iniciando meus estudos com Terraform e este é meu primeiro projeto.
 
 ## Detalhes do Projeto
 
+Este projeto cria os seguintes recursos:
+
 - VPC
 - Subnet Publica
 - Internet Gateway
