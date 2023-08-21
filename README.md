@@ -36,7 +36,7 @@ Está tudo setado na mão.
 Altere os nomes conforme necessário. " "
 **main.tf**
 
-## Autenticação
+## Autenticação no Provedor
 
 Eu exporto as configurações de login e senha para criação dos Recursos.
 Desta forma, não deixo fixo no projeto.
