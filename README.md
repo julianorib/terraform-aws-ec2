@@ -18,7 +18,7 @@ Este projeto cria os seguintes recursos:
 - Internet Gateway
 - Tabelas de Roteamento
 - Subnet Privada
-- Máquina Virtual Ubuntu (EC2)
+- 2 Máquinas Virtuais Ubuntu (EC2)
 - Chave SSH (KeyPairs)
     Você tem que criar sua Chave antes (ssh-keygen) ou Utilizar uma existente.
 - Security Groups (Acesso Internet e SSH)
@@ -33,10 +33,7 @@ git clone https://github.com/julianorib/terraform-aws-ec2.git
 
 ## Ajustes no Projeto
 
-Neste primeiro momento, não criei variáveis para os Recursos.
-Está tudo setado na mão. 
-Altere os nomes conforme necessário. " "
-**main.tf**
+Verificar as variáveis em *variables.tf* e defini-las em um novo arquivo *terraform.tfvars*
 
 ## Autenticação no Provedor
 
@@ -73,13 +70,6 @@ terraform apply
 ```
 terraform destroy
 ```
-
-
-## Melhorias Futuras
-
-- Pretendo criar as variáveis de nomes dos Recursos
-- Pretendo organizar os Recursos em arquivos separados
-
 
 ## Imagens de Instalação (aws_ami)
 

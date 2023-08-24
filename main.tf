@@ -14,79 +14,67 @@ provider "aws" {
 }
 
 
-resource "aws_vpc" "my_vpc" {
+resource "aws_vpc" "vpc" {
   cidr_block           = "10.200.0.0/16"
   enable_dns_hostnames = true
 
-  tags = {
-    Name = "my_vpc"
-  }
+  tags = local.common_tags
 }
 
-resource "aws_internet_gateway" "my_gw" {
-  vpc_id = aws_vpc.my_vpc.id
+resource "aws_internet_gateway" "internet_gw" {
+  vpc_id = aws_vpc.vpc.id
 
-  tags = {
-    Name = "my_gw"
-  }
+  tags = local.common_tags
 }
 
 
-resource "aws_subnet" "my_subnet_public" {
-  vpc_id = aws_vpc.my_vpc.id
+resource "aws_subnet" "subnet_public_a" {
+  vpc_id = aws_vpc.vpc.id
   # publica números impares
   cidr_block              = "10.200.1.0/24"
   availability_zone       = "us-east-2a"
   map_public_ip_on_launch = true
 
-  tags = {
-    Name = "my_subnet_public"
-  }
+  tags = local.common_tags
 }
 
-resource "aws_route_table" "my_route_public" {
-  vpc_id = aws_vpc.my_vpc.id
+resource "aws_route_table" "route_public" {
+  vpc_id = aws_vpc.vpc.id
 
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.my_gw.id
+    gateway_id = aws_internet_gateway.internet_gw.id
   }
-  tags = {
-    Name = "my_route_public"
-  }
+  tags = local.common_tags
 
 }
 
-resource "aws_route_table_association" "subnetpublic-to-routepublic" {
-  subnet_id      = aws_subnet.my_subnet_public.id
-  route_table_id = aws_route_table.my_route_public.id
+resource "aws_route_table_association" "subnetpublic-a-to-routepublic" {
+  subnet_id      = aws_subnet.subnet_public_a.id
+  route_table_id = aws_route_table.route_public.id
 }
 
-resource "aws_subnet" "my_subnet_private" {
-  vpc_id = aws_vpc.my_vpc.id
+resource "aws_subnet" "subnet_private_a" {
+  vpc_id = aws_vpc.vpc.id
   # private números pares
   cidr_block        = "10.200.2.0/24"
   availability_zone = "us-east-2a"
 
-  tags = {
-    Name = "my_subnet_private"
-  }
+  tags = local.common_tags
 }
 
-resource "aws_route_table" "my_route_private" {
-  vpc_id = aws_vpc.my_vpc.id
+resource "aws_route_table" "route_private" {
+  vpc_id = aws_vpc.vpc.id
 
   route = []
 
-  tags = {
-    Name = "my_route_private"
-  }
+  tags = local.common_tags
 
 }
 
-resource "aws_route_table_association" "subnetprivate-to-routeprivate" {
-  subnet_id      = aws_subnet.my_subnet_private.id
-  route_table_id = aws_route_table.my_route_private.id
+resource "aws_route_table_association" "subnetprivate-a-to-routeprivate" {
+  subnet_id      = aws_subnet.subnet_private_a.id
+  route_table_id = aws_route_table.route_private.id
 }
 
 data "aws_ami" "ubuntu" {
@@ -105,27 +93,34 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] # Canonical
 }
 
-resource "aws_instance" "myEC2" {
+resource "aws_instance" "virtual_machine" {
   ami             = data.aws_ami.ubuntu.id
-  instance_type   = "t2.micro"
-  key_name        = aws_key_pair.mykey.key_name
-  subnet_id       = aws_subnet.my_subnet_public.id
+  instance_type   = var.instance_type
+  key_name        = aws_key_pair.ssh_key.key_name
+  subnet_id       = aws_subnet.subnet_public_a.id
   security_groups = [aws_security_group.acesso-out-internet.id, aws_security_group.acesso-in-ssh.id]
+  count           = 2
 
   tags = {
-    Name = "myEC2"
+    Name     = "${var.Name}-${count.index}"
+    projeto  = var.Name
+    ambiente = var.tag-ambiente
+    dono     = var.tag-dono
+    ccusto   = var.tag-ccusto
   }
 }
 
-resource "aws_key_pair" "mykey" {
-  key_name   = "mykey"
-  public_key = file("../mykey.pub")
+resource "aws_key_pair" "ssh_key" {
+  key_name   = "ssh_key"
+  public_key = file("id_rsa.pub")
+
+  tags = local.common_tags
 }
 
 resource "aws_security_group" "acesso-out-internet" {
   name        = "acesso-out-internet"
   description = "permite acesso out internet"
-  vpc_id      = aws_vpc.my_vpc.id
+  vpc_id      = aws_vpc.vpc.id
 
   egress {
     description = "all"
@@ -140,7 +135,7 @@ resource "aws_security_group" "acesso-out-internet" {
 resource "aws_security_group" "acesso-in-ssh" {
   name        = "acesso-in-ssh"
   description = "permite acesso in ssh"
-  vpc_id      = aws_vpc.my_vpc.id
+  vpc_id      = aws_vpc.vpc.id
 
   ingress {
     description = "SSH 22"
@@ -153,6 +148,6 @@ resource "aws_security_group" "acesso-in-ssh" {
 }
 
 output "public_ip" {
-  value = aws_instance.myEC2.public_ip
+  value = aws_instance.virtual_machine.*.public_ip
 
 }
