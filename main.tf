@@ -148,6 +148,6 @@ resource "aws_security_group" "acesso-in-ssh" {
 }
 
 output "public_ip" {
-  value = aws_instance.virtual_machine.*.public_ip
+  value = "${aws_instance.virtual_machine.*.public_ip}"
 
 }
