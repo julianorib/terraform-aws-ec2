@@ -19,7 +19,8 @@ Este projeto cria os seguintes recursos:
 - Tabelas de Roteamento
 - 3 Subnets Privadas (1 em cada Zona de Disponibilidade)
 - 1 ou mais Máquinas Virtuais Ubuntu (EC2)
-- Chave SSH (KeyPairs)
+- Chave SSH (KeyPairs).
+<br>
     Você tem que criar sua Chave antes (ssh-keygen) ou Utilizar uma existente.
 - Security Groups (Acesso Internet e SSH)
 
@@ -41,7 +42,6 @@ Tipo de instância
 Região dos Recursos
 Quantidade Vms (EC2)
 CIDR VPC
-
 ```
 
 ## Autenticação no Provedor
