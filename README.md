@@ -1,6 +1,6 @@
 # Criando uma Maquina Virtual na AWS com Terraform
 
-Estou iniciando meus estudos com Terraform e este é meu primeiro projeto. 
+Estou estudando Terraform a algum tempo e já fiz vários updates neste Projeto. 
 
 - Primeiramente tenha uma conta na AWS.
 - Crie um Usuário com o Privilégio (Administrator Access).
@@ -14,11 +14,11 @@ Estou iniciando meus estudos com Terraform e este é meu primeiro projeto.
 Este projeto cria os seguintes recursos:
 
 - VPC
-- Subnet Publica
+- 3 Subnets Publicas (1 em cada Zona de Disponibilidade)
 - Internet Gateway
 - Tabelas de Roteamento
-- Subnet Privada
-- 2 Máquinas Virtuais Ubuntu (EC2)
+- 3 Subnets Privadas (1 em cada Zona de Disponibilidade)
+- 1 ou mais Máquinas Virtuais Ubuntu (EC2)
 - Chave SSH (KeyPairs)
     Você tem que criar sua Chave antes (ssh-keygen) ou Utilizar uma existente.
 - Security Groups (Acesso Internet e SSH)
@@ -35,6 +35,15 @@ git clone https://github.com/julianorib/terraform-aws-ec2.git
 
 Verificar as variáveis em *variables.tf* e defini-las em um novo arquivo *terraform.tfvars*
 
+```
+Tags
+Tipo de instância
+Região dos Recursos
+Quantidade Vms (EC2)
+CIDR VPC
+
+```
+
 ## Autenticação no Provedor
 
 Eu exporto as configurações de login e senha para criação dos Recursos.
@@ -44,14 +53,12 @@ Linux:
 ```bash
 export AWS_ACCESS_KEY_ID="Sua-Chave"
 export AWS_SECRET_ACCESS_KEY="Sua-Senha"
-export AWS_REGION="us-west-2"
 ```
 
 Windows:
 ```Powershell
 SET AWS_ACCESS_KEY_ID="Sua-Chave"
 SET AWS_SECRET_ACCESS_KEY="Sua-Senha"
-SET AWS_REGION="us-west-2"
 ```
 
 
